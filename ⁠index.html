@@ -16,15 +16,19 @@
             let indiceCasuale = Math.floor(Math.random() * this.stati.length);
             this.statoAttuale = this.stati[indiceCasuale];
             let el = this.el;
+            
             if (this.statoAttuale === 'calmo') {
-              el.setAttribute('animation', 'property: position; to: 0 1.5 -3; dur: 1500; easing: easeInOutQuad');
+              // Torna alla posizione centrale di riposo davanti alla camera
+              el.setAttribute('animation', 'property: position; to: 0 1.0 -3; dur: 1500; easing: easeInOutQuad');
             } 
             else if (this.statoAttuale === 'curioso') {
-              let randomX = (Math.random() * 2) - 1;
-              let randomY = (Math.random() * 1) + 1;
+              // Si sposta leggermente a destra o sinistra ed esplora lo spazio
+              let randomX = (Math.random() * 1.5) - 0.75;
+              let randomY = (Math.random() * 0.8) + 0.8;
               el.setAttribute('animation', 'property: position; to: ' + randomX + ' ' + randomY + ' -3; dur: 2000; easing: easeInOutSine');
             } 
             else if (this.statoAttuale === 'glitch') {
+              // Fa una rotazione completa su se stessa (360 gradi)
               el.setAttribute('animation', 'property: rotation; to: 0 360 0; dur: 800; easing: linear');
             }
           }
@@ -36,9 +40,17 @@
     <a-scene>
       <a-sky color="#000000"></a-sky>
       
+      <a-entity light="type: ambient; intensity: 0.8; color: #ffffff"></a-entity>
+      <a-entity light="type: directional; intensity: 0.5; castShadow: true" position="1 3 1"></a-entity>
+      
       <a-entity geometry="primitive: plane; width: 100; height: 100" rotation="-90 0 0" material="color: #ffffff; wireframe: true;"></a-entity>
       
-      <a-entity id="entita-autonoma" gltf-model="url(scene.gltf)" position="0 1.5 -3" scale="1 1 1" cervello-autonomo></a-entity>
+      <a-entity id="entita-autonoma" 
+                gltf-model="https://raw.githubusercontent.com/gf6ds5jrhd-sketch/S-c/main/scene.gltf" 
+                position="0 1.0 -3" 
+                scale="1 1 1" 
+                cervello-autonomo>
+      </a-entity>
 
       <a-entity camera look-controls position="0 1.6 0"></a-entity>
     </a-scene>
